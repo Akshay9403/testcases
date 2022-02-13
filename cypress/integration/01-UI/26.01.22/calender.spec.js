@@ -17,7 +17,7 @@ describe('verify the calender fun', () => {
         cy.visit('https://webdriveruniversity.com/Datepicker/index.html')
         let cal = new Date();
         cy.get('.input-group-addon').click()
-        cal.setDate(cal.getDate() + 500)// 5/11/2023 hi navin date set keli ya nusar case lihane aahe
+        cal.setDate(cal.getDate() + 500)// 23/06/2023 hi navin date set keli ya nusar case lihane aahe
         // find current date
         let year = cal.getFullYear()//2022
         let month = cal.getMonth()//0--index of jan is 0 and dece is 11

@@ -4,8 +4,8 @@ describe('verify iframe function',()=>{
     it('verify iframe fun with jquerry',()=>{
         cy.visit('https://webdriveruniversity.com/IFrame/index.html')
         cy.get('#frame').then(function(x){
-          let body= x.contents().find('body')
-          cy.wrap(body).as('simpleName')
+          let body= x.contents().find('body')// it is jqureyy method
+          cy.wrap(body).as('simpleName')//converted into cypress method
           cy.get('@simpleName').find('.sub-heading').first().should('have.text','Who Are We?')
         })
     })
