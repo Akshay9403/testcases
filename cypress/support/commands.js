@@ -24,3 +24,35 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 import 'cypress-file-upload';
+
+// Cypress.Commands.add('login', (username, password) => {
+//     cy.get('#signin_button').click()
+//     cy.get('#user_login').type(username)
+//     cy.get('#user_password').type(password)
+//     cy.get('#user_remember_me').check()
+//     cy.get('input[type="submit"]').click()
+//     cy.get('.offset2 > :nth-child(1)').should('have.text', 'Cash Accounts')
+
+// })
+
+Cypress.Commands.add('getandSetToken', () => {
+    Cypress.log({
+        message: 'Request token and set in local stage',
+        displayName: 'GetToken'
+    })
+    cy.request({
+        method: "POST",
+        url: 'https://api.realworld.io/api/users/login',
+        body: {
+            user:
+            {
+                email,
+                password
+            }
+        }
+
+    }).then(function (res) {
+        const { token } = res.body.user
+        localStorage.setItem('jwt', token)
+    })
+})

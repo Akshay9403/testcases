@@ -56,7 +56,7 @@ describe('verify alert fun', function () {
         cy.contains('Close').click()
         cy.get('.modal-title').should('not.be.visible')
     })
-    it.only('alert fun 5', () => {
+    it('alert fun 5', () => {
 
         cy.visit('https://webdriveruniversity.com/Popup-Alerts/index.html')
         cy.get('#button3').click()
@@ -72,5 +72,65 @@ describe('verify alert fun', function () {
         cy.get('.modal-title').should('have.text','Well Done For Waiting....!!!')
         cy.get('.modal-footer > .btn').click()
         cy.get('.modal-title').should('not.be.visible')
+    })
+
+    it.only('verify alerts ',()=>{
+        cy.visit('https://the-internet.herokuapp.com/javascript_alerts')
+        cy.contains('Click for JS Alert').click()
+        cy.on('window:alert',(str)=>{
+            expect(str).to.eq('I am a JS Alert')
+        })
+        cy.get('#result').should('be.visible')
+
+
+    })
+    it.only('verify confirm click ok',()=>{
+        cy.visit('https://the-internet.herokuapp.com/javascript_alerts')
+        cy.contains('Click for JS Confirm').click()
+        cy.on('window:confirm',(str)=>{
+            expect(str).to.eq('I am a JS Confirm')
+            return true
+        })
+        cy.get('#result').should('be.visible')
+        cy.get('#result').should('have.text','You clicked: Ok')
+    })
+    it.only('verify confirm click cancel',()=>{
+        cy.visit('https://the-internet.herokuapp.com/javascript_alerts')
+        cy.contains('Click for JS Confirm').click()
+        cy.on('window:confirm',(str)=>{
+            expect(str).to.eq('I am a JS Confirm')
+            return false
+        })
+        cy.get('#result').should('be.visible')
+        cy.get('#result').should('have.text','You clicked: Cancel')
+    })
+    it.only('verify promt click ok',()=>{
+        cy.visit('https://the-internet.herokuapp.com/javascript_alerts')
+        
+        cy.window().then((el)=>{
+            cy.stub(el,'prompt').returns('hello im new')
+        })
+        cy.contains('Click for JS Prompt').click()
+        cy.get('#result').should('contain','hello im new')
+    })
+    it.only('verify promt click ok',()=>{
+        cy.visit('https://the-internet.herokuapp.com/javascript_alerts')
+        
+        cy.window().then((el)=>{
+            cy.stub(el,'prompt').returns(true)
+            cy.contains('Click for JS Prompt').click()
+        })
+        
+        cy.get('#result').should('have.text','You entered: true')
+    })
+    it.only('verify promt click ok',()=>{
+        cy.visit('https://the-internet.herokuapp.com/javascript_alerts')
+        
+        cy.window().then((el)=>{
+            cy.stub(el,'prompt').returns(false)
+            cy.contains('Click for JS Prompt').click()
+        })
+        
+        cy.get('#result').should('have.text','You entered: false')
     })
 })
